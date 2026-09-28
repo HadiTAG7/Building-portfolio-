@@ -26,14 +26,15 @@ import { FrontierChart, type ScatterPoint } from "./FrontierChart";
 type Universe = "held" | "all" | "shariah";
 type BoundsPreset = "none" | "cap" | "excel";
 
-/** EF (Constrained) sheet: bounds on the Ultra Growth universe, everything else at 0%. */
+/**
+ * EF (Constrained) sheet: bounds on the Ultra Growth universe, everything else at 0%.
+ * The sheet also bounded SOXX (5–15%) and PAVE (≥5%), which are no longer in the tool.
+ */
 const EXCEL_BOUNDS: Record<string, [number, number]> = {
   SPTE: [20, 40],
   HLAL: [0, 100],
   SPWO: [10, 100],
   IBIT: [5, 10],
-  SOXX: [5, 15],
-  PAVE: [5, 100],
   SPUS: [0, 100],
 };
 
@@ -149,7 +150,7 @@ export function OptimizerPanel({ market, range }: { market: MarketData; range: I
     return [{ key: p.id, label: portfolioLabel(p, t), vol, ret, sharpe: vol ? (ret - riskFree) / vol : null, color: seriesColor(p.slot) }];
   });
 
-  // Weighted share of back-cast history behind a suggestion (DRAM/AIPO-heavy answers lean on estimates).
+  // Weighted share of back-cast history behind a suggestion (e.g. IBIT- or SPTE-heavy answers lean on estimates).
   const estimatedShare = (p: FrontierPoint) =>
     p.weights.reduce((acc, w, k) => acc + w * (1 - assetReliability(market.dates, range, INCEPTIONS[kept[k]]).actualShare), 0);
 

@@ -3,10 +3,9 @@
  * Numbers and dates come from src/data/generated/universe.json (scripts/import_excel.py).
  *
  * Shariah status is conservative: "compliant" only where the fund's own mandate is
- * Shariah-screened (SP Funds, Wahed) or the workbook marks the column "شرعي";
- * "nonCompliant" where the workbook marks it "حرام"; everything else is left unscreened.
+ * Shariah-screened (SP Funds, Wahed); everything else is left unscreened.
  */
-export type Bucket = "equities" | "thematic" | "income" | "alternatives";
+export type Bucket = "equities" | "income" | "alternatives";
 export type ShariahStatus = "compliant" | "nonCompliant" | "unscreened";
 export type ShariahSource = "mandate" | "workbook" | "none";
 
@@ -60,67 +59,6 @@ export const ASSET_INFO: Record<string, AssetInfo> = {
     shariahSource: "mandate",
     proxy: { ar: "ACWX (عالمي عدا أمريكا)", en: "ACWX (world ex-US)" },
   },
-  SOXX: {
-    bucket: "thematic",
-    classAr: "أشباه موصلات",
-    classEn: "Semiconductors",
-    shariah: "compliant",
-    shariahSource: "workbook",
-  },
-  DRAM: {
-    bucket: "thematic",
-    classAr: "ذاكرة",
-    classEn: "Memory",
-    shariah: "unscreened",
-    shariahSource: "workbook",
-    proxy: { ar: "SMH (أشباه موصلات)", en: "SMH (semiconductors)" },
-  },
-  LIT: {
-    bucket: "thematic",
-    classAr: "بطاريات وليثيوم",
-    classEn: "Battery & lithium",
-    shariah: "compliant",
-    shariahSource: "workbook",
-  },
-  PAVE: {
-    bucket: "thematic",
-    classAr: "بنية تحتية",
-    classEn: "Infrastructure",
-    shariah: "compliant",
-    shariahSource: "workbook",
-    proxy: { ar: "XLI (صناعات أمريكية)", en: "XLI (US industrials)" },
-  },
-  AIPO: {
-    bucket: "thematic",
-    classAr: "ذكاء اصطناعي وطاقة",
-    classEn: "AI & power",
-    shariah: "unscreened",
-    shariahSource: "workbook",
-    proxy: { ar: "مزيج SMH + XLU", en: "SMH + XLU blend" },
-  },
-  IYT: {
-    bucket: "thematic",
-    classAr: "نقل",
-    classEn: "Transportation",
-    shariah: "compliant",
-    shariahSource: "workbook",
-  },
-  ARTY: {
-    bucket: "thematic",
-    classAr: "ذكاء اصطناعي وتقنية",
-    classEn: "AI & technology",
-    shariah: "unscreened",
-    shariahSource: "workbook",
-    proxy: { ar: "مؤشر IXN (تقنية عالمية)", en: "IXN (global technology)" },
-  },
-  BOTZ: {
-    bucket: "thematic",
-    classAr: "روبوتات وذكاء اصطناعي",
-    classEn: "Robotics & AI",
-    shariah: "nonCompliant",
-    shariahSource: "workbook",
-    proxy: { ar: "مؤشر IXN (تقنية عالمية)", en: "IXN (global technology)" },
-  },
   SPSK: {
     bucket: "income",
     classAr: "صكوك (دخل ثابت)",
@@ -160,10 +98,10 @@ export const ASSET_INFO: Record<string, AssetInfo> = {
   },
 };
 
-export const BUCKET_ORDER: Bucket[] = ["equities", "thematic", "income", "alternatives"];
+export const BUCKET_ORDER: Bucket[] = ["equities", "income", "alternatives"];
 
 const FALLBACK: AssetInfo = {
-  bucket: "thematic",
+  bucket: "equities",
   classAr: "أخرى",
   classEn: "Other",
   shariah: "unscreened",

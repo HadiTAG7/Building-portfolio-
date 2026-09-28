@@ -1,12 +1,12 @@
 {
   "source": {
     "file": "New_Portfolios_Allocation.xlsx",
-    "importedAt": "2026-09-28T11:53:46+00:00",
+    "importedAt": "2026-09-28T13:22:51+00:00",
     "firstDate": "2016-01-04",
     "lastDate": "2026-09-25",
     "tradingDays": 2697,
-    "returnsFile": "/data/returns.ad61878617.json",
-    "hash": "ad61878617"
+    "returnsFile": "/data/returns.449f22a8ec.json",
+    "hash": "449f22a8ec"
   },
   "assets": [
     {
@@ -105,120 +105,6 @@
       "shariahNote": null
     },
     {
-      "ticker": "SOXX",
-      "name": "iShares Semiconductor ETF",
-      "classEn": "Semiconductors",
-      "classAr": "أشباه موصلات",
-      "inception": "2016-01-04",
-      "backcastUntil": null,
-      "dataFrom": "2016-01-04",
-      "summaryNote": "Full actual",
-      "methodology": {
-        "classAr": "أشباه موصلات",
-        "statusAr": "فعلي كامل",
-        "periodAr": "—",
-        "proxyAr": null,
-        "correlation": null,
-        "qualityAr": "فعلي"
-      },
-      "shariahNote": "شرعي"
-    },
-    {
-      "ticker": "DRAM",
-      "name": "Roundhill Memory ETF",
-      "classEn": "Memory",
-      "classAr": "ذاكرة",
-      "inception": "2026-04-02",
-      "backcastUntil": "2026-04-02",
-      "dataFrom": "2016-01-04",
-      "summaryNote": "Actual + pre-inception backcast",
-      "methodology": {
-        "classAr": "ذاكرة",
-        "statusAr": "مُقدَّر (طويل)",
-        "periodAr": "2016-01-04 → 2026-04-01",
-        "proxyAr": "مؤشر SMH (أشباه موصلات)",
-        "correlation": 0.87,
-        "qualityAr": "تقريبي"
-      },
-      "shariahNote": "لايوجد"
-    },
-    {
-      "ticker": "LIT",
-      "name": "Global X Lithium & Battery Tech ETF",
-      "classEn": "Battery / Lithium",
-      "classAr": "بطاريات/ليثيوم",
-      "inception": "2016-01-04",
-      "backcastUntil": null,
-      "dataFrom": "2016-01-04",
-      "summaryNote": "Full actual",
-      "methodology": {
-        "classAr": "بطاريات/ليثيوم",
-        "statusAr": "فعلي كامل",
-        "periodAr": "—",
-        "proxyAr": null,
-        "correlation": null,
-        "qualityAr": "فعلي"
-      },
-      "shariahNote": "شرعي"
-    },
-    {
-      "ticker": "PAVE",
-      "name": "Global X U.S. Infrastructure Development ETF",
-      "classEn": "Infrastructure",
-      "classAr": "بنية تحتية",
-      "inception": "2017-03-08",
-      "backcastUntil": "2017-03-08",
-      "dataFrom": "2016-01-04",
-      "summaryNote": "Actual + pre-inception backcast",
-      "methodology": {
-        "classAr": "بنية تحتية",
-        "statusAr": "مُقدَّر قصير",
-        "periodAr": "2016-01-04 → 2017-03-07",
-        "proxyAr": "مؤشر XLI (صناعات أمريكية)",
-        "correlation": 0.94,
-        "qualityAr": "ممتاز"
-      },
-      "shariahNote": "شرعي"
-    },
-    {
-      "ticker": "AIPO",
-      "name": "Defiance AI & Power Infrastructure ETF",
-      "classEn": "AI & Power",
-      "classAr": "ذكاء اصطناعي وطاقة",
-      "inception": "2025-07-25",
-      "backcastUntil": "2025-07-25",
-      "dataFrom": "2016-01-04",
-      "summaryNote": "Actual + pre-inception backcast",
-      "methodology": {
-        "classAr": "ذكاء اصطناعي وطاقة",
-        "statusAr": "مُقدَّر (طويل)",
-        "periodAr": "2016-01-04 → 2025-07-24",
-        "proxyAr": "مزيج SMH+XLU (تقنية+مرافق)",
-        "correlation": 0.86,
-        "qualityAr": "تقريبي"
-      },
-      "shariahNote": "لايوجد"
-    },
-    {
-      "ticker": "IYT",
-      "name": "iShares Transportation Average ETF",
-      "classEn": "Transportation",
-      "classAr": "نقل",
-      "inception": "2016-01-04",
-      "backcastUntil": null,
-      "dataFrom": "2016-01-04",
-      "summaryNote": "Full actual",
-      "methodology": {
-        "classAr": "نقل",
-        "statusAr": "فعلي كامل",
-        "periodAr": "—",
-        "proxyAr": null,
-        "correlation": null,
-        "qualityAr": "فعلي"
-      },
-      "shariahNote": "شرعي"
-    },
-    {
       "ticker": "SPUS",
       "name": "SP Funds S&P 500 Sharia Industry Exclusions ETF",
       "classEn": "US Eq (Shariah)",
@@ -295,44 +181,6 @@
       "shariahNote": null
     },
     {
-      "ticker": "ARTY",
-      "name": "iShares Future AI & Tech ETF",
-      "classEn": "AI & Tech",
-      "classAr": "ذكاء اصطناعي / تقنية",
-      "inception": "2018-06-28",
-      "backcastUntil": "2018-06-28",
-      "dataFrom": "2016-01-04",
-      "summaryNote": "فعلي + تقدير (IXN)",
-      "methodology": {
-        "classAr": "ذكاء اصطناعي / تقنية",
-        "statusAr": "مُقدَّر جزئياً",
-        "periodAr": null,
-        "proxyAr": null,
-        "correlation": null,
-        "qualityAr": null
-      },
-      "shariahNote": "لايوجد"
-    },
-    {
-      "ticker": "BOTZ",
-      "name": "Global X Robotics & Artificial Intelligence ETF",
-      "classEn": "Robotics & AI",
-      "classAr": "روبوتات وذكاء اصطناعي",
-      "inception": "2016-09-13",
-      "backcastUntil": "2016-09-13",
-      "dataFrom": "2016-01-04",
-      "summaryNote": "فعلي + تقدير (IXN)",
-      "methodology": {
-        "classAr": "روبوتات وذكاء اصطناعي",
-        "statusAr": "مُقدَّر قصير",
-        "periodAr": null,
-        "proxyAr": null,
-        "correlation": null,
-        "qualityAr": null
-      },
-      "shariahNote": "حرام"
-    },
-    {
       "ticker": "SPRE",
       "name": "SP Funds S&P Global REIT Sharia ETF",
       "classEn": "Global REIT",
@@ -374,79 +222,6 @@
         "HLAL": 0.35,
         "SPWO": 0.1,
         "IBIT": 0.05
-      }
-    },
-    {
-      "id": "ug-3",
-      "group": "ultraGrowth",
-      "index": 3,
-      "weights": {
-        "SPTE": 0.25,
-        "HLAL": 0.25,
-        "SPWO": 0.1,
-        "IBIT": 0.1,
-        "SOXX": 0.1,
-        "PAVE": 0.1,
-        "AIPO": 0.1
-      }
-    },
-    {
-      "id": "ug-4",
-      "group": "ultraGrowth",
-      "index": 4,
-      "weights": {
-        "SPTE": 0.25,
-        "HLAL": 0.1,
-        "SPWO": 0.1,
-        "IBIT": 0.1,
-        "SOXX": 0.1,
-        "DRAM": 0.1,
-        "AIPO": 0.25
-      }
-    },
-    {
-      "id": "ug-5",
-      "group": "ultraGrowth",
-      "index": 5,
-      "weights": {
-        "SPTE": 0.3,
-        "HLAL": 0.3,
-        "KSA": 0.03,
-        "SPWO": 0.07,
-        "IBIT": 0.05,
-        "SOXX": 0.1,
-        "PAVE": 0.05,
-        "AIPO": 0.1
-      }
-    },
-    {
-      "id": "ug-6",
-      "group": "ultraGrowth",
-      "index": 6,
-      "weights": {
-        "SPTE": 0.4,
-        "HLAL": 0.3,
-        "KSA": 0.03,
-        "SPWO": 0.07,
-        "IBIT": 0.05,
-        "SOXX": 0.05,
-        "PAVE": 0.05,
-        "AIPO": 0.05
-      }
-    },
-    {
-      "id": "ug-7",
-      "group": "ultraGrowth",
-      "index": 7,
-      "weights": {
-        "SPTE": 0.3,
-        "HLAL": 0.35,
-        "KSA": 0.05,
-        "SPWO": 0.1,
-        "IBIT": 0.05,
-        "SOXX": 0.05,
-        "PAVE": 0.05,
-        "AIPO": 0.05
       }
     },
     {

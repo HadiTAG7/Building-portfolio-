@@ -17,13 +17,16 @@ export interface ConstraintResult {
   subject?: string;
 }
 
-/** The Scenario sheet's editable checks, with its default limits. */
+/**
+ * The Scenario sheet's editable checks, with its default limits. The workbook's
+ * "synthetic" group was IBIT + DRAM + AIPO; DRAM and AIPO are no longer in the tool.
+ */
 export const DEFAULT_CONSTRAINTS: ConstraintRule[] = [
   { id: "total", kind: "total", limit: 1, enabled: true },
   { id: "maxSingle", kind: "maxSingle", limit: 0.45, enabled: true },
   { id: "maxClass", kind: "maxClass", limit: 0.45, enabled: true },
   { id: "core", kind: "groupMin", limit: 0.8, tickers: ["SPTE", "HLAL"], enabled: true },
-  { id: "synthetic", kind: "groupMax", limit: 0.05, tickers: ["IBIT", "DRAM", "AIPO"], enabled: true },
+  { id: "synthetic", kind: "groupMax", limit: 0.05, tickers: ["IBIT"], enabled: true },
 ];
 
 const TOL = 1e-4;

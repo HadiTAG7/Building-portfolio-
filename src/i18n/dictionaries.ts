@@ -10,7 +10,7 @@ const ar = {
   meta: {
     title: "مُنشئ المحافظ الاستثمارية",
     description:
-      "ابنِ محفظتك من 18 صندوقاً وحدّد الأوزان، واعرض الأداء التاريخي والمخاطر بنفس معادلات ملف الإكسل: العائد السنوي المركب، التذبذب، شارب، سورتينو، وأقصى تراجع.",
+      "ابنِ محفظتك من الصناديق المتاحة وحدّد الأوزان، واعرض الأداء التاريخي والمخاطر بنفس معادلات ملف الإكسل: العائد السنوي المركب، التذبذب، شارب، سورتينو، وأقصى تراجع.",
   },
   brand: { name: "مُنشئ المحافظ", sub: "بناء وتحليل المحافظ الاستثمارية" },
   nav: {
@@ -89,7 +89,6 @@ const ar = {
     shariahOnly: "المتوافقة فقط",
     buckets: {
       equities: "الأسهم",
-      thematic: "القطاعات والموضوعات",
       income: "الصكوك والعقار",
       alternatives: "السلع والأصول البديلة",
     },
@@ -269,7 +268,7 @@ const ar = {
       maxSingle: "أقصى وزن لصندوق واحد",
       maxClass: "أقصى تركّز في فئة أصول واحدة",
       core: "الحد الأدنى للأساس (SPTE + HLAL)",
-      synthetic: "الحد الأقصى للأصول ذات التاريخ التقديري (IBIT + DRAM + AIPO)",
+      synthetic: "الحد الأقصى لـ IBIT (تاريخه تقديري غالباً)",
     },
     value: "القيمة",
     limit: "الحد",
@@ -357,7 +356,7 @@ const ar = {
   methodology: {
     title: "المنهجية والمعادلات",
     intro:
-      "الأداة تعيد تنفيذ معادلات ملف الإكسل حرفياً، وتم التحقق من نتائجها مقابل الملف بعد إعادة حسابه (13 محفظة × 3 فترات × 11 مقياساً، فرق أقل من 10⁻⁷).",
+      "الأداة تعيد تنفيذ معادلات ملف الإكسل حرفياً، وتم التحقق من نتائجها مقابل الملف بعد إعادة حسابه (كل المحافظ الجاهزة × 3 فترات × 11 مقياساً، فرق أقل من 10⁻⁷).",
     dataTitle: "البيانات",
     data: [
       "العوائد اليومية الشاملة (سعر + توزيعات معاد استثمارها) من الإغلاق المعدّل في Yahoo Finance.",
@@ -401,7 +400,7 @@ const en: Dictionary = {
   meta: {
     title: "Portfolio Builder",
     description:
-      "Build portfolios from 18 funds, set the weights and see historical performance and risk computed with the workbook's own formulas: CAGR, volatility, Sharpe, Sortino and max drawdown.",
+      "Build portfolios from the available funds, set the weights and see historical performance and risk computed with the workbook's own formulas: CAGR, volatility, Sharpe, Sortino and max drawdown.",
   },
   brand: { name: "Portfolio Builder", sub: "Build and analyse investment portfolios" },
   nav: {
@@ -480,7 +479,6 @@ const en: Dictionary = {
     shariahOnly: "Shariah only",
     buckets: {
       equities: "Equities",
-      thematic: "Sectors & themes",
       income: "Sukuk & real estate",
       alternatives: "Commodities & alternatives",
     },
@@ -660,7 +658,7 @@ const en: Dictionary = {
       maxSingle: "Maximum weight in one fund",
       maxClass: "Maximum concentration in one asset class",
       core: "Minimum core (SPTE + HLAL)",
-      synthetic: "Maximum in mostly-estimated funds (IBIT + DRAM + AIPO)",
+      synthetic: "Maximum in IBIT (mostly estimated history)",
     },
     value: "Value",
     limit: "Limit",
@@ -748,7 +746,7 @@ const en: Dictionary = {
   methodology: {
     title: "Methodology and formulas",
     intro:
-      "The tool re-implements the workbook's formulas one-for-one and was checked against the recalculated workbook (13 portfolios × 3 periods × 11 metrics, differences below 10⁻⁷).",
+      "The tool re-implements the workbook's formulas one-for-one and was checked against the recalculated workbook (every preset × 3 periods × 11 metrics, differences below 10⁻⁷).",
     dataTitle: "Data",
     data: [
       "Daily total returns (price + reinvested distributions) from Yahoo Finance adjusted closes.",

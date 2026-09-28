@@ -235,7 +235,23 @@ export const usePortfolioStore = create<State>()(
     },
     {
       name: "portfolio-builder",
-      version: 1,
+      version: 2,
+      // v2 removed SOXX, DRAM, LIT, PAVE, AIPO, IYT, ARTY, BOTZ and the presets that held them.
+      migrate: (persisted, version) => {
+        const s = persisted as Partial<State>;
+        if (version < 2 && s) {
+          s.portfolios = (s.portfolios ?? []).map((p) => ({
+            ...p,
+            weights: cleanWeights(p.weights ?? {}),
+            presetId: p.presetId && UNIVERSE.presets.some((x) => x.id === p.presetId) ? p.presetId : undefined,
+          }));
+          s.constraints = DEFAULT_CONSTRAINTS.map((d) => {
+            const old = s.constraints?.find((c) => c.id === d.id);
+            return old ? { ...d, limit: old.limit, enabled: old.enabled } : d;
+          });
+        }
+        return s as State;
+      },
       storage: createJSONStorage(() => localStorage),
       // Rehydrated manually after mount so the server HTML and first client render agree.
       skipHydration: true,

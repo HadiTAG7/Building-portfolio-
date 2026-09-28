@@ -57,6 +57,9 @@ const payload: ReturnsPayload = JSON.parse(readFileSync(join(root, "public", UNI
 const market = toMarketData(payload);
 const full = resolveWindow(market.dates);
 const preset = (id: string) => presetWeights(UNIVERSE.presets.find((p) => p.id === id)!);
+// The fixture covers the whole workbook; only presets and funds still in the tool are checked here.
+const hasPreset = (id: string) => UNIVERSE.presets.some((p) => p.id === id);
+const inTool = (ticker: string) => market.tickers.includes(ticker);
 
 function close(actual: number | null, expected: number | null, rel = 1e-7, abs = 1e-9) {
   if (expected === null) {
@@ -68,7 +71,7 @@ function close(actual: number | null, expected: number | null, rel = 1e-7, abs =
 }
 
 describe("portfolio comparison metrics match the recalculated workbook", () => {
-  for (const p of fixture.portfolios) {
+  for (const p of fixture.portfolios.filter((x) => hasPreset(x.id))) {
     fixture.windows[p.group].forEach((win, w) => {
       it(`${p.id} window ${w} (${win.start ?? "start"} → ${win.end ?? "end"})`, () => {
         const m = computeMetrics(runBacktest(market, preset(p.id), resolveWindow(market.dates, win)));
@@ -90,14 +93,15 @@ describe("portfolio comparison metrics match the recalculated workbook", () => {
 });
 
 describe("risk dashboard", () => {
-  it("correlation matrix (18 × 18, full history)", () => {
-    const idx = fixture.tickers.map((t) => market.tickers.indexOf(t));
-    const corr = correlationMatrix(market, idx, full);
-    for (let i = 0; i < idx.length; i++) for (let j = 0; j < idx.length; j++) close(corr[i][j], fixture.correlation[i][j], 0, 1e-8);
+  it("correlation matrix (full history)", () => {
+    const rows = fixture.tickers.map((t, k) => ({ k, i: market.tickers.indexOf(t) })).filter((x) => x.i >= 0);
+    expect(rows.length).toBe(market.tickers.length);
+    const corr = correlationMatrix(market, rows.map((r) => r.i), full);
+    rows.forEach((a, r) => rows.forEach((b, c) => close(corr[r][c], fixture.correlation[a.k][b.k], 0, 1e-8)));
   });
 
   it("drawdown depth and trough date", () => {
-    for (const d of fixture.drawdowns) {
+    for (const d of fixture.drawdowns.filter((x) => hasPreset(x.id))) {
       const m = computeMetrics(runBacktest(market, preset(d.id), full));
       close(m.maxDrawdown, d.maxDrawdown);
       expect(m.troughDate).toBe(d.troughDate);
@@ -105,7 +109,7 @@ describe("risk dashboard", () => {
   });
 
   it("calendar-year returns 2016–2025", () => {
-    for (const c of fixture.calendarYears) {
+    for (const c of fixture.calendarYears.filter((x) => hasPreset(x.id))) {
       const years = calendarYearReturns(runBacktest(market, preset(c.id), full));
       for (const [year, value] of Object.entries(c.years)) {
         const y = years.find((r) => r.year === Number(year));
@@ -152,7 +156,7 @@ describe("attribution and rebalancing", () => {
   });
 
   it("monthly returns chain to the full-period return", () => {
-    const bt = runBacktest(market, preset("ug-3"), full);
+    const bt = runBacktest(market, preset("g-2"), full);
     const chained = monthlyReturns(bt).reduce((g, m) => g * (1 + m.ret), 1) - 1;
     close(chained, bt.wealth[bt.wealth.length - 1] - 1, 1e-10, 1e-10);
   });
@@ -160,7 +164,7 @@ describe("attribution and rebalancing", () => {
 
 describe("reliability", () => {
   it("per-asset actual vs back-cast days", () => {
-    for (const r of fixture.reliability) {
+    for (const r of fixture.reliability.filter((x) => inTool(x.ticker))) {
       const meta = UNIVERSE.assets.find((a) => a.ticker === r.ticker)!;
       const out = assetReliability(market.dates, full, meta.inception);
       expect(out.actualDays).toBe(r.actualDays);
@@ -239,12 +243,14 @@ describe("efficient frontier formulas", () => {
   });
 
   it("estimates inputs from the daily data", () => {
-    const idx = ["SPTE", "HLAL", "GLD", "DRAM"].map((t) => market.tickers.indexOf(t));
+    const idx = ["SPTE", "HLAL", "GLD"].map((t) => market.tickers.indexOf(t));
     const inceptions = market.tickers.map((t) => UNIVERSE.assets.find((a) => a.ticker === t)!.inception);
-    const byWindow = estimateInputs(market, idx, full, "window", inceptions);
+    const toMid2024 = resolveWindow(market.dates, { end: "2024-06-30" });
+    const byWindow = estimateInputs(market, idx, toMid2024, "window", inceptions);
     expect(byWindow.assets).toEqual(idx);
-    const actualOnly = estimateInputs(market, idx, full, "actual", inceptions);
-    expect(actualOnly.excluded).toEqual([market.tickers.indexOf("DRAM")]); // < 1 year of real history
+    // SPTE launched in December 2023, so it has under a year of real history by mid-2024.
+    const actualOnly = estimateInputs(market, idx, toMid2024, "actual", inceptions);
+    expect(actualOnly.excluded).toEqual([market.tickers.indexOf("SPTE")]);
   });
 });
 

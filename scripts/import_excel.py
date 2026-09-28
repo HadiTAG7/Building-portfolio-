@@ -31,6 +31,10 @@ UNIVERSE_OUT = ROOT / "src" / "data" / "generated" / "universe.json"
 RETURNS_DIR = ROOT / "public" / "data"
 
 BACKCAST_FONT_RGB = "FF843C0C"  # orange-italic cells mark pre-inception estimates
+
+# Funds taken out of the tool. They are skipped even if the workbook still has them,
+# and workbook presets that hold any of them are dropped (the rest keep their numbering).
+EXCLUDED_TICKERS = {"SOXX", "DRAM", "LIT", "PAVE", "AIPO", "IYT", "ARTY", "BOTZ"}
 DECIMALS = 10
 
 
@@ -174,6 +178,8 @@ def main(path: str) -> None:
 
     assets = []
     for i, t in enumerate(tickers):
+        if t in EXCLUDED_TICKERS:
+            continue
         s = summary.get(t, {})
         m = methodology.get(t, {})
         values = series[t]
@@ -195,11 +201,17 @@ def main(path: str) -> None:
             "shariahNote": ug_notes[i],
         })
 
-    presets = (
-        [{"id": f"ug-{k + 1}", "group": "ultraGrowth", "index": k + 1, "weights": w} for k, w in enumerate(ug)]
-        + [{"id": f"g-{k + 1}", "group": "growth", "index": k + 1, "weights": w} for k, w in enumerate(growth)]
-    )
+    presets = []
+    for group, prefix, portfolios in (("ultraGrowth", "ug", ug), ("growth", "g", growth)):
+        for k, w in enumerate(portfolios):
+            held_out = sorted(set(w) & EXCLUDED_TICKERS)
+            if held_out:
+                print(f"note: dropping preset {prefix}-{k + 1} (holds {', '.join(held_out)})", file=sys.stderr)
+                continue
+            presets.append({"id": f"{prefix}-{k + 1}", "group": group, "index": k + 1, "weights": w})
 
+    kept = [t for t in tickers if t not in EXCLUDED_TICKERS]
+    series = {t: series[t] for t in kept}
     returns_payload = json.dumps({"dates": dates, "returns": series}, separators=(",", ":"))
     digest = hashlib.sha256(returns_payload.encode()).hexdigest()[:10]
     RETURNS_DIR.mkdir(parents=True, exist_ok=True)
@@ -224,7 +236,7 @@ def main(path: str) -> None:
     UNIVERSE_OUT.parent.mkdir(parents=True, exist_ok=True)
     UNIVERSE_OUT.write_text(json.dumps(universe, ensure_ascii=False, indent=2) + "\n")
 
-    print(f"{len(tickers)} assets, {len(dates)} days ({dates[0]} -> {dates[-1]}), "
+    print(f"{len(kept)} assets, {len(dates)} days ({dates[0]} -> {dates[-1]}), "
           f"{len(presets)} presets -> {returns_file.relative_to(ROOT)} ({returns_file.stat().st_size // 1024} KB)")
 
 
