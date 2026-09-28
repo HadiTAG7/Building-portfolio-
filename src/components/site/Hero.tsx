@@ -6,10 +6,10 @@ export function Hero({ t, locale }: { t: Dictionary; locale: Locale }) {
   const f = getFormatters(locale);
   const { source, assets } = UNIVERSE;
   const facts = [
-    { value: f.int(assets.length), label: t.hero.funds },
-    { value: f.int(source.tradingDays), label: t.hero.days },
-    { value: `${source.firstDate.slice(0, 4)} – ${source.lastDate.slice(0, 4)}`, label: t.hero.period },
-    { value: f.date(source.lastDate), label: t.hero.updated },
+    { value: f.int(assets.length), label: t.hero.funds, numeric: true },
+    { value: f.int(source.tradingDays), label: t.hero.days, numeric: true },
+    { value: `${source.firstDate.slice(0, 4)} – ${source.lastDate.slice(0, 4)}`, label: t.hero.period, numeric: true },
+    { value: f.date(source.lastDate), label: t.hero.updated, numeric: false },
   ];
   return (
     <section className="relative overflow-hidden bg-hero text-white">
@@ -31,7 +31,7 @@ export function Hero({ t, locale }: { t: Dictionary; locale: Locale }) {
           {facts.map((x) => (
             <div key={x.label} className="rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3.5 backdrop-blur-sm">
               <dt className="text-[12px] text-white/60">{x.label}</dt>
-              <dd className="mt-1 text-[18px] font-extrabold ltr">{x.value}</dd>
+              <dd className={`mt-1 text-[18px] font-extrabold ${x.numeric ? "ltr" : ""}`}>{x.value}</dd>
             </div>
           ))}
         </dl>

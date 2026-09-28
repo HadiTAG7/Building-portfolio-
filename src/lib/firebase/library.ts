@@ -15,6 +15,8 @@ export interface LibraryEntry {
 
 const COLLECTION = "portfolios";
 
+let emulatorsConnected = false;
+
 // The SDK is loaded on demand so visitors who never open the library don't download it.
 async function sdk() {
   const [{ getApps, initializeApp }, firestore, auth] = await Promise.all([
@@ -23,7 +25,15 @@ async function sdk() {
     import("firebase/auth"),
   ]);
   const app = getApps()[0] ?? initializeApp(firebaseConfig);
-  return { app, firestore, auth, db: firestore.getFirestore(app), authInstance: auth.getAuth(app) };
+  const db = firestore.getFirestore(app);
+  const authInstance = auth.getAuth(app);
+  // Local testing against `firebase emulators:start` (NEXT_PUBLIC_FIREBASE_EMULATOR=1).
+  if (process.env.NEXT_PUBLIC_FIREBASE_EMULATOR === "1" && !emulatorsConnected) {
+    emulatorsConnected = true;
+    firestore.connectFirestoreEmulator(db, "127.0.0.1", 8080);
+    auth.connectAuthEmulator(authInstance, "http://127.0.0.1:9099", { disableWarnings: true });
+  }
+  return { app, firestore, auth, db, authInstance };
 }
 
 /** Anonymous sign-in gives each browser a stable id, so people can delete only what they saved. */
