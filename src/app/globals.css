@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+/*
+ * Visual language inspired by Abyan Capital: Almarai, deep navy surfaces with
+ * blue gradients, mint/teal accents, generous rounded cards and pill buttons.
+ */
+@theme {
+  --font-sans: var(--font-almarai), "Almarai", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-ink: #050717;
+  --color-ink-2: #2a3834;
+  --color-muted: #595862;
+  --color-faint: #8a8d99;
+  --color-line: #e3e7ef;
+  --color-line-strong: #cfd6e3;
+  --color-page: #f4f7fb;
+  --color-surface: #ffffff;
+
+  --color-navy: #041c54;
+  --color-navy-deep: #010d17;
+  --color-blue: #0e80e7;
+  --color-indigo: #3646e8;
+  --color-cobalt: #0039a7;
+  --color-cobalt-hover: #2b38ba;
+  --color-sky: #e7f2fd;
+  --color-sky-2: #cfe6fa;
+  --color-teal: #41aeb3;
+  --color-green: #55bb95;
+  --color-mint: #eef8f4;
+  --color-mint-2: #dcf3eb;
+
+  --color-good: #0ca30c;
+  --color-good-text: #006300;
+  --color-warning: #fab219;
+  --color-warning-text: #8a5a00;
+  --color-critical: #d03b3b;
+
+  --radius-card: 24px;
+  --radius-pill: 999px;
+
+  --shadow-card: 0 1px 2px rgb(5 7 23 / 0.04), 0 8px 24px rgb(5 7 23 / 0.05);
+}
+
+:root {
+  color-scheme: light;
+  --gradient-hero: linear-gradient(152deg, #004ddd 0%, #041c54 42%, #010d17 100%);
+  --gradient-footer: linear-gradient(91deg, #003c9a -88.81%, #04003c 43.28%);
+  --gradient-blue: linear-gradient(90deg, #0e80e7 0%, #3646e8 100%);
+  --gradient-green: linear-gradient(270deg, #41aeb3 -18.74%, #55bb95 99.34%);
+
+  /* Chart roles (validated categorical order; slot 1 is the brand blue). */
+  --series-1: #0e80e7;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #eda100;
+  --series-5: #e87ba4;
+  --series-6: #008300;
+  --series-7: #4a3aa7;
+  --series-8: #e34948;
+  --chart-grid: #e8ecf3;
+  --chart-axis: #cfd6e3;
+  --chart-text: #6b6e7b;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+body {
+  overflow-x: clip;
+  background: var(--color-page);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Numbers that align in columns. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Keep Latin numerals and tickers readable inside RTL text. */
+.ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.bg-hero {
+  background-image: var(--gradient-hero);
+}
+
+.bg-footer {
+  background-image: var(--gradient-footer);
+}
+
+.bg-grad-blue {
+  background-image: var(--gradient-blue);
+}
+
+.bg-grad-green {
+  background-image: var(--gradient-green);
+}
+
+/* Native range input restyled as a thin brand track. */
+input[type="range"].weight-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to var(--range-dir, right),
+    var(--color-blue) 0%,
+    var(--color-blue) var(--fill, 0%),
+    var(--color-line) var(--fill, 0%),
+    var(--color-line) 100%
+  );
+  outline: none;
+}
+
+input[type="range"].weight-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #fff;
+  border: 2px solid var(--color-blue);
+  box-shadow: 0 1px 3px rgb(5 7 23 / 0.2);
+  cursor: pointer;
+}
+
+input[type="range"].weight-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: #fff;
+  border: 2px solid var(--color-blue);
+  cursor: pointer;
+}
+
+[dir="rtl"] input[type="range"].weight-range {
+  --range-dir: left;
+}
+
+input[type="number"].no-spin::-webkit-outer-spin-button,
+input[type="number"].no-spin::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"].no-spin {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.recharts-wrapper:focus,
+.recharts-surface:focus {
+  outline: none;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}

@@ -1,0 +1,35 @@
+rules_version = '2';
+
+// Team library of saved portfolios.
+// Anyone with the site link can read; a browser signed in anonymously can add
+// portfolios and delete only the ones it created. Nothing can be edited in place.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /portfolios/{id} {
+      allow read: if true;
+
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasOnly(['v', 'name', 'author', 'note', 'weights', 'ownerUid', 'createdAt'])
+        && request.resource.data.keys().hasAll(['v', 'name', 'weights', 'ownerUid', 'createdAt'])
+        && request.resource.data.v == 1
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 60
+        && (!('author' in request.resource.data) || (request.resource.data.author is string && request.resource.data.author.size() <= 40))
+        && (!('note' in request.resource.data) || (request.resource.data.note is string && request.resource.data.note.size() <= 280))
+        && request.resource.data.weights is map
+        && request.resource.data.weights.size() > 0
+        && request.resource.data.weights.size() <= 18;
+
+      allow delete: if request.auth != null && resource.data.ownerUid == request.auth.uid;
+
+      allow update: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
